@@ -1,0 +1,7 @@
+pandas>=2.0.0
+
+
+tqdm
+matplotlib
+ffmpeg-python
+pytest
