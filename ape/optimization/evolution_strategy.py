@@ -36,7 +36,7 @@ class NaiveEvolutionStrategy(EvolutionStrategy):
     """Evolution Strategy by naive covariance and mean update."""
 
     def __init__(self, μ: int, λ: int, mean: Array = None, cov: Matrix = None, n: int = None):
-        if mean is None and cov is None and n is None:
+        if (mean is None) and (cov is None) and (n is None):
             raise AttributeError('You must specify n or mean and cov')
         if mean is None:
             mean : Array = np.zeros((n,))

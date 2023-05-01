@@ -24,15 +24,12 @@ from ape.optimization import NaiveEvolutionStrategy
 quadratic = lambda x: x[0]**2 + x[1]**2
 
 # Parameters
-limit = np.array([1, 1])
-mean = np.random.uniform(-limit, limit)
-cov = np.identity(2)
-mu = 12
-size = mu//2
+μ = 12
+λ = μ//2
 iterations = 100
 
 # Algorithm
-es = NaiveEvolutionStrategy(mean, cov, mu, size)
+es = NaiveEvolutionStrategy(μ, λ, n=2)
 es.optimize(f=quadratic, iterations=iterations)
 mean, _ = es.estimate()
 

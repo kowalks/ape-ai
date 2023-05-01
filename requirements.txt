@@ -5,3 +5,4 @@ tqdm
 matplotlib
 ffmpeg-python
 pytest
+pre-commit
