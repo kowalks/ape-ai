@@ -1,7 +1,7 @@
 import numpy as np
 import numpy.typing as npt
 import pandas as pd
-from tqdm import trange
+from tqdm import tqdm
 from math import sin
 from typing import Callable
 
@@ -20,9 +20,9 @@ class EvolutionStrategy:
     def estimate(self):
         raise NotImplementedError
     
-    def optimize(self, f: Callable, iterations: int = 1000):
-        history_samples = []
-        for _ in trange(iterations):
+    def optimize(self, f: Callable, iterations: int = 1000) -> list[Array]:
+        history_samples : list[Array] = []
+        for _ in tqdm(range(iterations)):
             samples = self._generate()
             history_samples.append(samples)
             fitnesses = np.zeros(np.size(samples, 0))
@@ -35,11 +35,18 @@ class EvolutionStrategy:
 class NaiveEvolutionStrategy(EvolutionStrategy):
     """Evolution Strategy by naive covariance and mean update."""
 
-    def __init__(self, mean: Array, cov: Matrix, μ: int, λ: int):
-        self.mean = mean
-        self.cov = cov
+    def __init__(self, μ: int, λ: int, mean: Array = None, cov: Matrix = None, n: int = None):
+        if mean is None and cov is None and n is None:
+            raise AttributeError('You must specify n or mean and cov')
+        if mean is None:
+            mean : Array = np.zeros((n,))
+        if cov is None:
+            cov : Matrix = np.identity(n) 
+
         self.μ = μ
         self.λ = λ
+        self.mean = mean
+        self.cov = cov
 
     def _generate(self) -> Array:
         samples = np.random.multivariate_normal(self.mean, self.cov, self.λ)
