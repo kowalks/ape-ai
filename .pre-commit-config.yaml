@@ -14,3 +14,12 @@ repos:
       language: system
       pass_filenames: false
       always_run: true
+    
+    - id: pylint-check
+      name: pylint-check
+      stages: [commit]
+      types: [python]
+      entry: pylint ape
+      language: system
+      pass_filenames: false
+      always_run: true

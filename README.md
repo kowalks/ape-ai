@@ -30,7 +30,7 @@ iterations = 100
 
 # Algorithm
 es = NaiveEvolutionStrategy(μ, λ, n=2)
-es.optimize(f=quadratic, iterations=iterations)
+es.optimize(func=quadratic, iterations=iterations)
 mean, _ = es.estimate()
 
 print('estimated minimum:', mean, flush=True)

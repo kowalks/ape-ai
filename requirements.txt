@@ -6,3 +6,4 @@ matplotlib
 ffmpeg-python
 pytest
 pre-commit
+pylint

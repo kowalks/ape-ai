@@ -13,7 +13,7 @@ def test_sample_code_evolution_strategy(tol=1e-6):
 
     # Algorithm
     es = NaiveEvolutionStrategy(μ, λ, n=2)
-    es.optimize(f=quadratic, iterations=iterations)
+    es.optimize(func=quadratic, iterations=iterations)
     mean, _ = es.estimate()
 
     assert np.linalg.norm(mean) < tol

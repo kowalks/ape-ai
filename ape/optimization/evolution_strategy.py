@@ -1,16 +1,13 @@
-import numpy as np
-import numpy.typing as npt
-import pandas as pd
-from tqdm import tqdm
-from math import sin
 from typing import Callable
+import numpy as np
+from tqdm import tqdm
 
 from ape._typing import Array, Matrix
 
 
 class EvolutionStrategy:
     """Optimization by Evolution Strategy (ES)."""
-    
+
     def _generate(self) -> Array:
         raise NotImplementedError
 
@@ -18,16 +15,30 @@ class EvolutionStrategy:
         raise NotImplementedError
 
     def estimate(self):
+        """Estimate the local minimum after optimization."""
         raise NotImplementedError
-    
-    def optimize(self, f: Callable, iterations: int = 1000) -> list[Array]:
+
+    def optimize(self, func: Callable, iterations: int = 1000) -> list[Array]:
+        """Search for local minimum.
+
+        Computes the local minimum by applying the Evolution Strategy based on
+        population sampling. Population is sampled from multivariate normal
+        distribution whose parameters are updated in each iteration.
+
+        Args:
+            func: Function to be optimized.
+            iterations: Desired number of iterations (i.e. updates in the algorithm).
+        
+        Returns:
+            A list with the historical population that was used in the algorithm.
+        """
         history_samples : list[Array] = []
         for _ in tqdm(range(iterations)):
             samples = self._generate()
             history_samples.append(samples)
             fitnesses = np.zeros(np.size(samples, 0))
             for j in range(np.size(samples, 0)):
-                fitnesses[j] = f(samples[j, :])
+                fitnesses[j] = func(samples[j, :])
             self._update(samples, fitnesses)
         return history_samples
 
@@ -35,18 +46,11 @@ class EvolutionStrategy:
 class NaiveEvolutionStrategy(EvolutionStrategy):
     """Evolution Strategy by naive covariance and mean update."""
 
-    def __init__(self, μ: int, λ: int, mean: Array = None, cov: Matrix = None, n: int = None):
-        if (mean is None) and (cov is None) and (n is None):
-            raise AttributeError('You must specify n or mean and cov')
-        if mean is None:
-            mean : Array = np.zeros((n,))
-        if cov is None:
-            cov : Matrix = np.identity(n) 
-
+    def __init__(self, μ: int, λ: int, n: int, mean: Array | None = None, cov: Matrix|None = None):
         self.μ = μ
         self.λ = λ
-        self.mean = mean
-        self.cov = cov
+        self.mean : Array = mean if mean is not None else np.zeros((n,))
+        self.cov : Matrix = cov if cov is not None else np.identity(n)
 
     def _generate(self) -> Array:
         samples = np.random.multivariate_normal(self.mean, self.cov, self.λ)
@@ -56,10 +60,10 @@ class NaiveEvolutionStrategy(EvolutionStrategy):
         indices = np.argsort(fitnesses)
         best_indices = indices[:self.μ]
         best_samples = samples[best_indices, :]
-        
-        centered = best_samples - self.mean
+
+        centered : Matrix = best_samples - self.mean
         self.cov = 1/self.μ * (centered.T @ centered)
         self.mean : Array = 1/self.μ * np.sum(best_samples, axis=0)
-    
+
     def estimate(self) -> tuple[Array, Matrix]:
         return self.mean, self.cov
