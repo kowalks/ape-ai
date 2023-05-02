@@ -1,10 +1,17 @@
+[build-system]
+requires = [
+    'setuptools',
+    'wheel',
+    'versioneer[toml]',
+]
+
 [project]
 name = 'ape-ai'
+dynamic = ['version']
 readme = 'README.md'
 description = 'A Python framework for AI'
 authors = [{ name = 'Guilherme Kowalczuk', email='guilhermekowalczuk@gmail.com' }]
 requires-python = '>=3.11'
-version = '0.1.2'
 dependencies = [
     'numpy',
     'tqdm'
@@ -32,3 +39,11 @@ include-package-data = true
 
 [tool.setuptools.packages.find]
 include = ['ape', 'ape.*']
+
+[tool.versioneer]
+VCS = 'git'
+style = 'pep440'
+versionfile_source = 'ape/_version.py'
+versionfile_build = 'ape/_version.py'
+tag_prefix = 'v'
+parentdir_prefix = "ape-"
