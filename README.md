@@ -1,5 +1,8 @@
 # ape-ai: a Python framework for AI
 
+[![PyPI Latest Release](https://img.shields.io/pypi/v/ape-ai.svg)](https://pypi.org/project/ape-ai/)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/kowalks/ape-ai/build.yml)](https://github.com/kowalks/ape-ai/actions/workflows/build.yml)
+
 ## What is it?
 
 *ape-ai* is a Python package that provides implementations of common algorithms in artificial intelligence. This package is a personal project, aimed at providing a simple and easy-to-use library for AI enthusiasts, students, and researchers to explore and experiment with various AI techniques. Additionally, this project serves as a learning platform for the developer to study object-oriented programming patterns and testing libraries.
