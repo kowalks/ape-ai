@@ -16,6 +16,10 @@ ipython_config.py
 # Environments
 .env
 
+# Build
+dist/
+*.egg-info
+
 # VS Code
 .vscode/
 *.code-workspace
