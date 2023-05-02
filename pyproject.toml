@@ -1,9 +1,17 @@
 [project]
 name = 'ape-ai'
 readme = 'README.md'
+description = 'A Python framework for AI'
 authors = [{ name = 'Guilherme Kowalczuk', email='guilhermekowalczuk@gmail.com' }]
 requires-python = '>=3.11'
-version = "0.1"
+version = '0.1.1'
+classifiers = [
+    'Topic :: Scientific/Engineering'
+]
+
+[project.urls]
+repository = 'https://github.com/kowalks/ape-ai'
+
 
 [tool.pytest.ini_options]
 pythonpath = '.'
