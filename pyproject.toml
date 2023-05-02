@@ -1,2 +1,15 @@
+[project]
+name = 'ape-ai'
+readme = 'README.md'
+authors = [{ name = 'Guilherme Kowalczuk', email='guilhermekowalczuk@gmail.com' }]
+requires-python = '>=3.11'
+version = "0.1"
+
 [tool.pytest.ini_options]
-pythonpath = "."
+pythonpath = '.'
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ['ape', 'ape.*']
