@@ -4,7 +4,11 @@ readme = 'README.md'
 description = 'A Python framework for AI'
 authors = [{ name = 'Guilherme Kowalczuk', email='guilhermekowalczuk@gmail.com' }]
 requires-python = '>=3.11'
-version = '0.1.1'
+version = '0.1.2'
+dependencies = [
+    'numpy',
+    'tqdm'
+]
 classifiers = [
     'Topic :: Scientific/Engineering'
 ]
@@ -12,6 +16,13 @@ classifiers = [
 [project.urls]
 repository = 'https://github.com/kowalks/ape-ai'
 
+[project.optional-dependencies]
+test = ['pytest']
+all = [
+    'matplotlib',
+    'ffmpeg-python',
+    'pytest',
+]
 
 [tool.pytest.ini_options]
 pythonpath = '.'
